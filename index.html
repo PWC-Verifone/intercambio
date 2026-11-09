@@ -27,13 +27,6 @@
     color-scheme:dark;
   }
 }
-:root[data-theme="dark"]{
-  --bg:#1B1216; --surface:#261A20; --ink:#F7E9EE; --muted:#BFA6B0;
-  --red:#FF5C7A; --red-ink:#1B1216; --pine:#6FD9AE; --gold:#F2C25B;
-  --line:#3B2A31; --chip:#261A20; --chip-on:#F7E9EE; --chip-on-ink:#1B1216;
-  --env:#4A3A22; --env-dark:#3A2D1A; --ok:#6FD9AE; --err:#FF7A92;
-  color-scheme:dark;
-}
 *,*::before,*::after{box-sizing:border-box}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 body{margin:0;background:var(--bg);color:var(--ink);
@@ -54,7 +47,7 @@ section{margin-top:2.25rem}
 .chip{font:inherit;font-size:1rem;padding:.6rem .95rem;border-radius:999px;border:1.5px solid var(--line);
   background:var(--chip);color:var(--ink);cursor:pointer;min-height:44px}
 .chip[aria-pressed="true"]{background:var(--chip-on);color:var(--chip-on-ink);border-color:var(--chip-on)}
-.chip:focus-visible,.btn:focus-visible,textarea:focus-visible,.link:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.chip:focus-visible,.btn:focus-visible,textarea:focus-visible,.link:focus-visible,summary:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
 .btn{font:inherit;font-weight:600;font-size:1.05rem;border:0;border-radius:.8rem;padding:.85rem 1.3rem;
   background:var(--red);color:var(--red-ink);cursor:pointer;min-height:48px;display:inline-flex;align-items:center;gap:.5rem;text-decoration:none}
 .btn[disabled]{opacity:.4;cursor:not-allowed}
@@ -62,20 +55,18 @@ section{margin-top:2.25rem}
 .row{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.25rem}
 .link{background:none;border:0;padding:0;font:inherit;color:var(--muted);text-decoration:underline;cursor:pointer}
 .back{margin-bottom:1.5rem;display:inline-block}
-
-/* Envelope — the one memorable element */
 .envelope{position:relative;margin-top:1.5rem;background:var(--env);border-radius:.6rem;padding:3.4rem 1.25rem 1.5rem;overflow:hidden}
-.envelope::before{content:"";position:absolute;inset:0 0 auto 0;height:3rem;background:var(--env-dark);
-  clip-path:polygon(0 0,100% 0,50% 100%)}
+.envelope::before{content:"";position:absolute;inset:0 0 auto 0;height:3rem;background:var(--env-dark);clip-path:polygon(0 0,100% 0,50% 100%)}
 .seal{position:absolute;top:1.7rem;left:50%;width:2.6rem;height:2.6rem;margin-left:-1.3rem;border-radius:50%;
   background:var(--red);display:grid;place-items:center;color:var(--red-ink);font-family:"Young Serif",Georgia,serif;font-size:1.1rem}
-.code{font-family:"Young Serif",Georgia,serif;font-size:clamp(1.8rem,8vw,2.4rem);text-align:center;letter-spacing:.06em;margin-top:.6rem;
-  user-select:all;-webkit-user-select:all;word-break:break-all}
+.big{font-family:"Young Serif",Georgia,serif;font-size:clamp(1.6rem,7vw,2.2rem);text-align:center;line-height:1.15;margin-top:.6rem}
+.code{font-family:"Young Serif",Georgia,serif;letter-spacing:.06em;user-select:all;-webkit-user-select:all}
 .small{font-size:.92rem;color:var(--muted)}
 .envelope .small{text-align:center;color:var(--ink);opacity:.75}
-
-textarea{width:100%;min-height:7rem;margin-top:1rem;font:inherit;font-size:1rem;padding:.8rem;border-radius:.8rem;
+textarea{width:100%;min-height:6rem;margin-top:1rem;font:inherit;font-size:1rem;padding:.8rem;border-radius:.8rem;
   border:1.5px solid var(--line);background:var(--surface);color:var(--ink);resize:vertical}
+details{margin-top:2rem;border-top:1px solid var(--line);padding-top:1rem}
+summary{cursor:pointer;color:var(--muted)}
 .msg{margin-top:.9rem;font-size:.98rem}
 .msg.ok{color:var(--ok)} .msg.err{color:var(--err)}
 .list{list-style:none;padding:0;margin:1rem 0 0;border-top:1px solid var(--line)}
@@ -83,7 +74,6 @@ textarea{width:100%;min-height:7rem;margin-top:1rem;font:inherit;font-size:1rem;
 .list .st{color:var(--muted);font-size:.92rem;white-space:nowrap}
 .list .st.done{color:var(--ok);font-weight:600}
 .progress{font-family:"Young Serif",Georgia,serif;font-size:1.25rem;margin-top:.25rem}
-
 .reveal .envelope{padding-bottom:2rem}
 .reveal .name{font-family:"Young Serif",Georgia,serif;font-size:clamp(2.2rem,10vw,3.2rem);line-height:1.05;text-align:center;margin-top:.75rem}
 @media (prefers-reduced-motion:no-preference){
@@ -99,60 +89,64 @@ textarea{width:100%;min-height:7rem;margin-top:1rem;font:inherit;font-size:1rem;
 </head>
 <body>
 <main>
-  <!-- Inicio -->
   <div id="v-home">
     <div class="garland" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
     <h1>Intercambio Villalobos</h1>
-    <p class="lede">Nadie recuerda a quién le tocó a Ana Pau. Si cada quien manda un código con su papelito, la app descubre el de ella sin que nadie vea los de los demás.</p>
+    <p class="lede">Nadie recuerda a quién le tocó a Ana Pau. Elige tu nombre y el de tu papelito: se guarda en clave, y con los de todos la página descubre el de ella sin que nadie vea los de los demás.</p>
     <section>
       <h2>¿Quién eres?</h2>
       <div class="chips" id="who"></div>
     </section>
   </div>
 
-  <!-- Persona que da -->
   <div id="v-giver" hidden>
     <button class="link back" data-home>Cambiar de persona</button>
     <h2 id="g-title"></h2>
     <p class="small">Elige el nombre que venía en tu papelito.</p>
     <div class="chips" id="to"></div>
-    <div class="row"><button class="btn" id="make" disabled>Crear mi código</button></div>
+    <div class="row"><button class="btn" id="save" disabled>Guardar mi papelito</button></div>
+    <p class="msg" id="g-msg" role="status"></p>
 
-    <div id="g-out" hidden>
-      <div class="envelope" role="group" aria-label="Tu código">
+    <div id="g-ok" hidden>
+      <div class="envelope">
         <div class="seal" aria-hidden="true">✦</div>
-        <div class="code" id="code"></div>
-        <p class="small">Este código no muestra el nombre.</p>
+        <div class="big">Tu papelito quedó guardado</div>
+        <p class="small">Ya no tienes que hacer nada más. Gracias.</p>
       </div>
-      <p>Mándaselo a Alejandro o a Malú por WhatsApp, o pégalo en el grupo.</p>
+      <p class="small" style="margin-top:1rem">Si te equivocaste de nombre, elige el correcto y vuelve a guardar; cuenta el último.</p>
+    </div>
+
+    <div id="g-fail" hidden>
+      <p class="msg err">No se pudo guardar. Revisa tu internet y vuelve a intentarlo, o manda este código a Alejandro o a Malú por WhatsApp:</p>
+      <p class="big code" id="code"></p>
       <div class="row">
-        <a class="btn" id="wa" target="_blank" rel="noopener">Enviar por WhatsApp</a>
-        <button class="btn ghost" id="copy">Copiar código</button>
+        <a class="btn ghost" id="wa" target="_blank" rel="noopener">Enviar por WhatsApp</a>
       </div>
-      <p class="msg ok" id="copied" hidden>Código copiado.</p>
     </div>
   </div>
 
-  <!-- Ana Paula -->
   <div id="v-ana" hidden>
-    <button class="link back" data-home>Cambiar de persona</button>
     <h2>El sobre de Ana Pau</h2>
-    <p class="small">Pega aquí los códigos que manden los demás. Puedes pegar varios juntos, o un mensaje completo con el código adentro. Usen siempre esta misma compu y este mismo navegador.</p>
-    <textarea id="paste" placeholder="INT-XXX-XXX"></textarea>
-    <div class="row"><button class="btn" id="add">Agregar códigos</button></div>
-    <p class="msg" id="a-msg" role="status"></p>
-
+    <p class="small">Esta pantalla es sólo para Alejandro y Malú.</p>
     <section>
-      <p class="small">Códigos recibidos</p>
-      <p class="progress" id="prog"></p>
+      <p class="small">Papelitos recibidos</p>
+      <p class="progress" id="prog">Cargando…</p>
       <ul class="list" id="list"></ul>
-      <div class="row"><button class="btn" id="open" disabled>Abrir mi sobre</button></div>
+      <p class="msg" id="a-msg" role="status"></p>
+      <div class="row">
+        <button class="btn" id="open" disabled>Abrir el sobre</button>
+        <button class="btn ghost" id="refresh">Actualizar</button>
+      </div>
       <p class="msg err" id="a-err" hidden></p>
-      <p style="margin-top:1.5rem"><button class="link" id="reset">Borrar todos los códigos</button></p>
     </section>
+    <details>
+      <summary>¿Alguien te mandó su código por WhatsApp?</summary>
+      <textarea id="paste" placeholder="INT-XXX-XXX"></textarea>
+      <div class="row"><button class="btn ghost" id="add">Agregar códigos</button></div>
+      <p class="msg" id="p-msg" role="status"></p>
+    </details>
   </div>
 
-  <!-- Resultado -->
   <div id="v-reveal" class="reveal" hidden>
     <button class="link back" id="r-back">Volver</button>
     <h2>A Ana Pau le tocó…</h2>
@@ -160,17 +154,20 @@ textarea{width:100%;min-height:7rem;margin-top:1rem;font:inherit;font-size:1rem;
       <div class="seal" aria-hidden="true">✦</div>
       <div class="name" id="r-name"></div>
     </div>
-    <p class="small" style="margin-top:1rem">Esta pantalla sólo la deben ver Alejandro y Malú.</p>
   </div>
 </main>
 
 <script>
 (function(){
+  // Pega aquí la URL de tu aplicación web de Apps Script (termina en /exec)
+  var SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx2HZZzY6mczwdHvE8rFH1NTLkdmhPGlYftWLCgJUCzU6LDcEzm0gfbD2eqDPVP-0PtPA/exec";
+
   var PEOPLE = ["Alejandro Villalobos","Alex Almaraz","Ana Fernandez","Ana Paula (Pollo)","Bertha",
     "David Villalobos","Diego Villalobos","Eduardo Villalobos","Malú","Neza","Omar Villalobos","Paola Yazmin Medina"];
   var N = PEOPLE.length, ANA = 3;
-  var KEY = "intercambio-villalobos-v1";
+  var KEY = "intercambio-villalobos-pegados";
   var AL = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  var configured = /^https:\/\/script\.google\.com\//.test(SCRIPT_URL);
 
   function chk(b){ return (Math.imul(b, 0x9E3779B1) >>> 18) & 0x3FFF; }
   function encode(g, r){
@@ -183,7 +180,7 @@ textarea{width:100%;min-height:7rem;margin-top:1rem;font:inherit;font-size:1rem;
     return "INT-" + s.slice(0,3) + "-" + s.slice(3);
   }
   function decode(code){
-    var s = code.toUpperCase().replace(/[^A-Z0-9]/g, "").replace(/^INT/, "");
+    var s = String(code).toUpperCase().replace(/[^A-Z0-9]/g, "").replace(/^INT/, "");
     if (s.length !== 6) return null;
     var v = 0;
     for (var i = 0; i < 6; i++){ var k = AL.indexOf(s[i]); if (k < 0) return null; v = v*32 + k; }
@@ -198,7 +195,6 @@ textarea{width:100%;min-height:7rem;margin-top:1rem;font:inherit;font-size:1rem;
   var $ = function(id){ return document.getElementById(id); };
   var views = ["v-home","v-giver","v-ana","v-reveal"];
   function show(id){ views.forEach(function(v){ $(v).hidden = v !== id; }); window.scrollTo(0,0); }
-
   function chip(label, onClick){
     var b = document.createElement("button");
     b.className = "chip"; b.type = "button"; b.textContent = label;
@@ -206,118 +202,109 @@ textarea{width:100%;min-height:7rem;margin-top:1rem;font:inherit;font-size:1rem;
     return b;
   }
 
-  // Inicio
+  // ---------- Quien da ----------
   var me = null, target = null;
   PEOPLE.forEach(function(p, i){
-    $("who").appendChild(chip(p, function(){
-      me = i;
-      if (i === ANA){ renderAna(); show("v-ana"); }
-      else { openGiver(); show("v-giver"); }
-    }));
+    if (i === ANA) return;
+    $("who").appendChild(chip(p, function(){ me = i; openGiver(); show("v-giver"); }));
   });
   document.querySelectorAll("[data-home]").forEach(function(b){ b.addEventListener("click", function(){ show("v-home"); }); });
 
-  // Quien da
   function openGiver(){
     target = null;
     $("g-title").textContent = PEOPLE[me].split(" ")[0] + ", ¿a quién te tocó?";
-    $("to").innerHTML = ""; $("make").disabled = true; $("g-out").hidden = true; $("copied").hidden = true;
+    $("to").innerHTML = ""; $("save").disabled = true;
+    $("g-ok").hidden = true; $("g-fail").hidden = true; $("g-msg").textContent = "";
     PEOPLE.forEach(function(p, i){
       if (i === me) return;
       var c = chip(p, function(){
         target = i;
         $("to").querySelectorAll(".chip").forEach(function(x){ x.setAttribute("aria-pressed", x === c ? "true" : "false"); });
-        $("make").disabled = false; $("g-out").hidden = true;
+        $("save").disabled = false; $("g-ok").hidden = true; $("g-fail").hidden = true; $("g-msg").textContent = "";
       });
       $("to").appendChild(c);
     });
   }
-  $("make").addEventListener("click", function(){
+
+  $("save").addEventListener("click", function(){
     if (target === null) return;
     var code = encode(me, target);
-    $("code").textContent = code;
-    $("wa").href = "https://wa.me/?text=" + encodeURIComponent("Código del intercambio para Ana Pau: " + code);
-    $("g-out").hidden = false; $("copied").hidden = true;
-    $("g-out").scrollIntoView({ behavior: "smooth", block: "start" });
+    var btn = $("save");
+    btn.disabled = true; $("g-msg").className = "msg"; $("g-msg").textContent = "Guardando…";
+    $("g-ok").hidden = true; $("g-fail").hidden = true;
+    function fail(){
+      $("g-msg").textContent = "";
+      $("code").textContent = code;
+      $("wa").href = "https://wa.me/?text=" + encodeURIComponent("Código del intercambio para Ana Pau: " + code);
+      $("g-fail").hidden = false; btn.disabled = false;
+    }
+    if (!configured){ fail(); return; }
+    fetch(SCRIPT_URL, { method: "POST", body: JSON.stringify({ code: code }) })
+      .then(function(r){ return r.json(); })
+      .then(function(d){
+        if (!d || !d.ok) throw new Error("rechazado");
+        $("g-msg").textContent = ""; $("g-ok").hidden = false;
+        $("g-ok").scrollIntoView({ behavior: "smooth", block: "start" });
+      })
+      .catch(fail);
   });
-  $("copy").addEventListener("click", function(){
-    var t = $("code").textContent;
-    function done(){ $("copied").hidden = false; }
-    if (navigator.clipboard && navigator.clipboard.writeText){
-      navigator.clipboard.writeText(t).then(done, function(){ selectCode(); });
-    } else selectCode();
-  });
-  function selectCode(){
-    var r = document.createRange(); r.selectNodeContents($("code"));
-    var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
-    $("copied").textContent = "Código seleccionado. Cópialo con tu teclado.";
-    $("copied").hidden = false;
+
+  // ---------- Sobre de Ana Pau ----------
+  var online = [], pasted = [];
+  try { pasted = JSON.parse(localStorage.getItem(KEY) || "[]") || []; } catch(e){ pasted = []; }
+  function savePasted(){ try { localStorage.setItem(KEY, JSON.stringify(pasted)); } catch(e){} }
+
+  function assignments(){
+    var map = {};
+    online.concat(pasted).forEach(function(c){ var d = decode(c); if (d) map[d.g] = d.r; });
+    return map;
   }
 
-  // Ana Paula
-  var store = {};
-  try { store = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch(e){ store = {}; }
-  function save(){ try { localStorage.setItem(KEY, JSON.stringify(store)); } catch(e){} }
-
-  $("add").addEventListener("click", function(){
-    var text = $("paste").value.toUpperCase();
-    var found = text.match(/\bINT[\s\-]+[A-Z0-9]{3}[\s\-]*[A-Z0-9]{3}\b/g) || [];
-    var added = [], updated = [], bad = 0;
-    found.forEach(function(c){
-      var d = decode(c);
-      if (!d){ bad++; return; }
-      var prev = store[d.g];
-      if (prev && prev !== d.r) updated.push(PEOPLE[d.g]);
-      else if (!prev) added.push(PEOPLE[d.g]);
-      store[d.g] = d.r;
-    });
-    save();
-    var m = $("a-msg"), parts = [];
-    if (!found.length){ m.className = "msg err"; m.textContent = "No encontré ningún código. Deben verse así: INT-ABC-123."; }
-    else {
-      if (added.length) parts.push("Agregado: " + added.join(", ") + ".");
-      if (updated.length) parts.push("Se actualizó el código de " + updated.join(", ") + ".");
-      if (!added.length && !updated.length && found.length > bad) parts.push("Esos códigos ya estaban agregados.");
-      if (bad) parts.push(bad + (bad === 1 ? " código no es válido" : " códigos no son válidos") + "; pide que lo vuelvan a mandar.");
-      m.className = "msg " + (bad && !added.length && !updated.length ? "err" : "ok");
-      m.textContent = parts.join(" ");
-      $("paste").value = "";
+  function load(){
+    $("a-msg").className = "msg"; $("a-msg").textContent = "";
+    if (!configured){
+      $("a-msg").className = "msg err";
+      $("a-msg").textContent = "Falta poner la URL de Apps Script en el archivo. Mientras, puedes pegar códigos abajo.";
+      render(); return;
     }
-    renderAna();
-  });
+    $("prog").textContent = "Cargando…"; $("refresh").disabled = true;
+    fetch(SCRIPT_URL)
+      .then(function(r){ return r.json(); })
+      .then(function(d){ online = (d && d.codes) || []; render(); })
+      .catch(function(){
+        $("a-msg").className = "msg err";
+        $("a-msg").textContent = "No se pudieron cargar los papelitos. Revisa tu internet y presiona Actualizar.";
+        render();
+      })
+      .then(function(){ $("refresh").disabled = false; });
+  }
 
-  $("reset").addEventListener("click", function(){
-    if (!confirm("¿Borrar todos los códigos recibidos?")) return;
-    store = {}; save(); $("a-msg").textContent = ""; renderAna();
-  });
-
-  function check(){
-    var givers = Object.keys(store).map(Number);
-    var byR = {};
-    givers.forEach(function(g){ var r = store[g]; (byR[r] = byR[r] || []).push(g); });
+  function check(map){
+    var givers = Object.keys(map).map(Number), byR = {};
+    givers.forEach(function(g){ (byR[map[g]] = byR[map[g]] || []).push(g); });
     for (var r in byR){
       if (byR[r].length > 1){
         return { error: byR[r].map(function(g){ return PEOPLE[g]; }).join(" y ") +
-          " pusieron a la misma persona. Uno de los dos se equivocó y debe crear su código otra vez." };
+          " eligieron a la misma persona. Uno de los dos debe volver a guardar su papelito con el nombre correcto." };
       }
     }
     if (givers.length < N - 1) return { pending: true };
-    var taken = {}; givers.forEach(function(g){ taken[store[g]] = true; });
+    var taken = {}; givers.forEach(function(g){ taken[map[g]] = true; });
     for (var i = 0; i < N; i++){
       if (!taken[i]){
-        if (i === ANA) return { error: "Según los códigos, nadie más quedó libre para ti. Alguien se equivocó al elegir; pidan que todos revisen su papelito." };
+        if (i === ANA) return { error: "Según los papelitos, no quedó nadie libre para Ana Pau. Alguien se equivocó; pidan que todos revisen el suyo." };
         return { result: i };
       }
     }
-    return { error: "Los códigos no cuadran. Pidan que todos revisen su papelito." };
+    return { error: "Los papelitos no cuadran. Pidan que todos revisen el suyo." };
   }
 
-  function renderAna(){
-    var list = $("list"); list.innerHTML = "";
-    var count = 0;
+  function render(){
+    var map = assignments(), list = $("list"), count = 0;
+    list.innerHTML = "";
     PEOPLE.forEach(function(p, i){
       if (i === ANA) return;
-      var has = store[i] !== undefined; if (has) count++;
+      var has = map[i] !== undefined; if (has) count++;
       var li = document.createElement("li");
       var a = document.createElement("span"); a.textContent = p;
       var b = document.createElement("span"); b.className = "st" + (has ? " done" : "");
@@ -325,18 +312,44 @@ textarea{width:100%;min-height:7rem;margin-top:1rem;font:inherit;font-size:1rem;
       li.appendChild(a); li.appendChild(b); list.appendChild(li);
     });
     $("prog").textContent = count + " de " + (N - 1);
-    var c = check();
+    var c = check(map);
     $("a-err").hidden = !c.error; $("a-err").textContent = c.error || "";
     $("open").disabled = c.result === undefined;
   }
 
+  $("refresh").addEventListener("click", load);
+
+  $("add").addEventListener("click", function(){
+    var found = $("paste").value.toUpperCase().match(/\bINT[\s\-]+[A-Z0-9]{3}[\s\-]*[A-Z0-9]{3}\b/g) || [];
+    var ok = 0, bad = 0;
+    found.forEach(function(c){ if (decode(c)){ pasted.push(c); ok++; } else bad++; });
+    savePasted();
+    var m = $("p-msg");
+    if (!found.length){ m.className = "msg err"; m.textContent = "No encontré ningún código. Deben verse así: INT-ABC-123."; }
+    else {
+      m.className = "msg " + (ok ? "ok" : "err");
+      m.textContent = (ok ? ok + (ok === 1 ? " código agregado." : " códigos agregados.") : "") +
+        (bad ? " " + bad + (bad === 1 ? " no es válido." : " no son válidos.") : "");
+      $("paste").value = "";
+    }
+    render();
+  });
+
   $("open").addEventListener("click", function(){
-    var c = check(); if (c.result === undefined) return;
+    var c = check(assignments()); if (c.result === undefined) return;
     $("r-name").textContent = PEOPLE[c.result];
     var env = $("r-env"); env.classList.remove("opening"); void env.offsetWidth; env.classList.add("opening");
     show("v-reveal");
   });
   $("r-back").addEventListener("click", function(){ show("v-ana"); });
+
+  // ---------- Ruta ----------
+  function route(){
+    if (location.hash === "#sobre"){ show("v-ana"); load(); }
+    else show("v-home");
+  }
+  window.addEventListener("hashchange", route);
+  route();
 })();
 </script>
 </body>
